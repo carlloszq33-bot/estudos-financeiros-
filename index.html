@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Guia Financeiro Interativo</title><style>*{box-sizing:border-box}body{margin:0;background:#101722;color:#edf2f7;font:16px system-ui,Arial}header{padding:22px;text-align:center;background:#1d2939}h1{font-size:24px;color:#ffb34f;margin:0}header p{color:#b9c6d5}main{max-width:750px;margin:auto;padding:16px}nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}button{background:#ffb34f;border:0;border-radius:9px;padding:12px;font-weight:700;color:#18202b;cursor:pointer}nav button{flex:1 1 40%}section{display:block}.card{background:#1c2939;border:1px solid #34465c;border-radius:12px;padding:17px;margin-bottom:14px}h2{font-size:20px;color:#ffb34f}p{line-height:1.55}.ex{padding:12px;background:#111e2d;border-left:4px solid #ffb34f;line-height:1.8}.rule{background:#173b33;color:#b8f8d9;padding:12px;border-radius:8px;margin-top:12px}input,select{width:100%;padding:12px;background:#111e2d;border:1px solid #566b84;border-radius:8px;color:white;font-size:16px;margin:8px 0 15px}label{display:block}.result{display:none;background:#173b33;padding:14px;border-radius:9px;margin-top:15px;line-height:1.8}table{width:100%;border-collapse:collapse}td{padding:9px;border-bottom:1px solid #34465c}small{color:#b9c6d5}
+.panel{display:block;scroll-margin-top:12px} nav a{display:inline-block;padding:12px;border-radius:10px;background:#e9f0fa;color:#142c48;text-decoration:none;margin:3px;font-weight:700} nav a:active{background:#c3ddff} nav{position:sticky;top:0;background:#fff;padding:6px;z-index:2} </style></head><body><header><h1>📚 Guia Financeiro</h1><p>Conceito → Situação → Cálculo → Interpretação</p></header><main><nav><a href="#conceitos">Conceitos</a><a href="#fluxo">Fluxo de caixa</a><a href="#desconto">Descontos</a><a href="#classificar">Classificar</a></nav><div id="jsstatus" style="background:#4d2430;color:white;padding:10px;border-radius:8px;margin-bottom:12px">Interatividade indisponível neste visualizador. Abra o HTML no Safari.</div><section class="panel" id="conceitos"><div class="card"><h2>Receita × entrada</h2><p>Receita é o valor gerado pela venda ou serviço. Entrada é dinheiro recebido.</p><div class="ex">Serviço prestado: R$ 20.000<br/>Recebido agora: R$ 12.000<br/>A receber: R$ 8.000</div><div class="rule">Receita não é necessariamente dinheiro em caixa.</div></div><div class="card"><h2>Estoque × CMV × pagamento</h2><div class="ex">Setembro: compra R$ 8.000 em mercadorias para revenda → estoque (ativo).<br/>Outubro: paga ao fornecedor → saída de caixa.<br/>Novembro: vende tudo → reconhece R$ 8.000 de CMV.</div><div class="rule">Comprar, pagar e reconhecer o custo podem ocorrer em meses diferentes.</div></div><div class="card"><h2>Lucro × caixa</h2><p>Lucro é o resultado positivo após deduzir custos e despesas das receitas. Caixa é o dinheiro disponível.</p><div class="ex">Receita: R$ 20.000<br/>CMV: R$ 12.000<br/>Lucro bruto: R$ 8.000<br/>Cliente ainda não pagou.</div><div class="rule">Pode haver lucro sem recebimento.</div></div><div class="card"><h2>Competência × caixa</h2><div class="ex">Serviço realizado em setembro e recebido em novembro.</div><p><b>Competência:</b> receita em setembro.<br/><b>Caixa:</b> entrada em novembro.</p></div><div class="card"><h2>Liquidez e prazos</h2><p>Liquidez é a capacidade de converter ativos em dinheiro e cumprir obrigações.</p><div class="ex">Caixa: R$ 5.000<br/>Fornecedor vence hoje: R$ 8.000<br/>Cliente paga em 30 dias: R$ 15.000</div><div class="rule">Faltam R$ 3.000 hoje, mesmo havendo dinheiro a receber.</div></div><div class="card"><h2>Previsto × realizado</h2><p>Entradas e saídas <b>previstas</b> ainda vão acontecer. Entradas e saídas <b>realizadas</b> já aconteceram.</p><div class="rule">Saldo projetado não garante que haverá dinheiro em cada data de vencimento.</div></div></section><section class="panel" id="fluxo"><div class="card"><h2>🧮 Fluxo de caixa</h2><p>Saldo final = saldo inicial + entradas − saídas.</p><label>Saldo inicial</label><input id="saldo" step="any" type="number" value="12000"/><label>Entradas</label><input id="entradas" step="any" type="number" value="25000"/><label>Saídas</label><input id="saidas" step="any" type="number" value="13000"/><button id="calc" onclick="calcularFluxo()" type="button">Calcular e explicar</button><div class="result" id="rf"></div></div><div class="card"><h2>Como identificar?</h2><p>1. O que já estava no caixa?<br/>2. O que foi efetivamente recebido?<br/>3. O que foi efetivamente pago?<br/>4. Qual é o saldo restante?</p></div></section><section class="panel" id="desconto"><div class="card"><h2>🧮 Desconto simples</h2><label>O que deseja descobrir?</label><select id="modo" onchange="atualizarModo()"><option value="liquido">Líquido após desconto</option><option value="bruto">Bruto necessário</option></select><label id="rotulo">Valor bruto</label><input id="valor" step="any" type="number" value="3000"/><label>Desconto (%)</label><input id="taxa" step="any" type="number" value="5"/><button id="discountCalc" onclick="calcularDesconto()" type="button">Calcular e explicar</button><div class="result" id="rd"></div></div><div class="card"><h2>Como pensar?</h2><p><b>Conheço o bruto:</b> desconto = bruto × taxa; líquido = bruto − desconto.</p><p><b>Conheço o líquido desejado:</b> bruto = líquido ÷ (1 − taxa).</p><div class="rule">Desconto de 5% significa receber 95% do bruto.</div><small>Não inclui tarifas, juros ou outros encargos.</small></div></section><section class="panel" id="classificar"><div class="card"><h2>🧠 Classificação prática</h2><div class="ex" id="situacao"></div><label>Qual é a classificação?</label><select id="resposta"><option value="">Selecione</option><option value="receita">Receita</option><option value="entrada">Entrada de caixa</option><option value="saida">Saída de caixa</option><option value="estoque">Estoque</option><option value="cmv">CMV</option><option value="receber">Contas a receber</option><option value="pagar">Contas a pagar</option></select><button id="check" onclick="conferirResposta()" type="button">Conferir</button> <button id="next" onclick="proximaQuestao()" type="button">Próxima</button><div class="result" id="feedback"></div></div></section></main><script> 
+(function(){
+var perguntas=[
+ ['Uma transportadora prestou um serviço hoje, mas receberá no mês seguinte. O valor gerado é...','receita','O serviço gera receita mesmo antes do pagamento.'],
+ ['Um cliente transferiu R$ 5.000 hoje.','entrada','Dinheiro efetivamente recebido é entrada.'],
+ ['A empresa pagou combustível hoje.','saida','Dinheiro pago é saída.'],
+ ['Uma loja comprou mercadorias para revenda, ainda não vendidas.','estoque','Antes da venda, as mercadorias ficam no estoque.'],
+ ['A loja vendeu mercadorias do estoque. O custo delas é...','cmv','O custo das mercadorias vendidas é CMV.'],
+ ['Um cliente comprou a prazo e ainda deve à empresa.','receber','O valor pendente é contas a receber.'],
+ ['A empresa deve ao fornecedor e pagará depois.','pagar','A obrigação pendente é contas a pagar.']
+];
+var indice=0;
+function el(id){return document.getElementById(id)}
+function dinheiro(n){return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+function numero(id){var v=el(id).value.trim().replace(',','.');return v===''?NaN:Number(v)}
+function mostrar(id,html){var e=el(id);e.style.display='block';e.innerHTML=html}
+window.calcularFluxo=function(){
+ var s=numero('saldo'),e=numero('entradas'),o=numero('saidas');
+ if(!isFinite(s)||!isFinite(e)||!isFinite(o)||e<0||o<0){mostrar('rf','Confira os valores informados.');return}
+ mostrar('rf','Saldo inicial: '+dinheiro(s)+'<br>Entradas: '+dinheiro(e)+'<br>Saídas: '+dinheiro(o)+'<br><strong>Saldo final: '+dinheiro(s+e-o)+'</strong><br>Saldo final não é lucro.');
+};
+window.atualizarModo=function(){
+ var bruto=el('modo').value==='bruto';
+ el('rotulo').textContent=bruto?'Valor líquido desejado':'Valor bruto';
+ el('valor').value=bruto?'2850':'3000';
+ el('rd').style.display='none';
+};
+window.calcularDesconto=function(){
+ var v=numero('valor'),t=numero('taxa');
+ if(!isFinite(v)||!isFinite(t)||v<0||t<0||t>=100){mostrar('rd','Confira o valor e o percentual (de 0% a menos de 100%).');return}
+ var p=t/100,b,l,d;
+ if(el('modo').value==='bruto'){l=v;b=v/(1-p);d=b-l}
+ else{b=v;d=b*p;l=b-d}
+ mostrar('rd','Bruto: '+dinheiro(b)+'<br>Desconto: '+dinheiro(d)+'<br><strong>Líquido: '+dinheiro(l)+'</strong><br>'+(el('modo').value==='bruto'?'Bruto = líquido ÷ (1 − taxa).':'Líquido = bruto − desconto.'));
+};
+function desenhar(){el('situacao').textContent=(indice+1)+'/'+perguntas.length+' · '+perguntas[indice][0];el('resposta').value='';el('feedback').style.display='none'}
+window.conferirResposta=function(){
+ var v=el('resposta').value;
+ if(!v){mostrar('feedback','Selecione uma resposta.');return}
+ mostrar('feedback',(v===perguntas[indice][1]?'✓ Correto. ':'Ainda não. ')+perguntas[indice][2]);
+};
+window.proximaQuestao=function(){indice=(indice+1)%perguntas.length;desenhar()};
+function iniciar(){
+ el("jsstatus").textContent="Interatividade ativa ✓";el("jsstatus").style.background="#173b33";
+ desenhar();window.atualizarModo();
+
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar);else iniciar();
+})();
+</script></body></html>
